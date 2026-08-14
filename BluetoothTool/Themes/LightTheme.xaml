@@ -1,0 +1,26 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <!-- 浅色主题基础色板 -->
+    <SolidColorBrush x:Key="AppBackgroundBrush" Color="#F3F4F6" />
+    <SolidColorBrush x:Key="PanelBackgroundBrush" Color="#FFFFFF" />
+    <SolidColorBrush x:Key="CardBackgroundBrush" Color="#FFFFFF" />
+    <SolidColorBrush x:Key="InputBackgroundBrush" Color="#FFFFFF" />
+    <SolidColorBrush x:Key="HoverBackgroundBrush" Color="#EEF0F3" />
+    <SolidColorBrush x:Key="SelectedBackgroundBrush" Color="#E6F0FC" />
+    <SolidColorBrush x:Key="DividerBrush" Color="#E1E4E8" />
+
+    <SolidColorBrush x:Key="TextPrimaryBrush" Color="#1F2328" />
+    <SolidColorBrush x:Key="TextSecondaryBrush" Color="#6B7280" />
+    <SolidColorBrush x:Key="TextDisabledBrush" Color="#B6BCC4" />
+
+    <!-- 默认蓝色强调色（可被强调色字典覆盖） -->
+    <SolidColorBrush x:Key="AccentBrush" Color="#1A73E8" />
+    <SolidColorBrush x:Key="AccentHoverBrush" Color="#1666C9" />
+    <SolidColorBrush x:Key="AccentPressedBrush" Color="#1255A8" />
+    <SolidColorBrush x:Key="AccentForegroundBrush" Color="#FFFFFF" />
+
+    <!-- 接收消息颜色 -->
+    <SolidColorBrush x:Key="SuccessBrush" Color="#188038" />
+
+</ResourceDictionary>
