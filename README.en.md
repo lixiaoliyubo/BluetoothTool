@@ -1,36 +1,117 @@
-# 蓝牙调试工具
+# Bluetooth Debug Tool (BluetoothTool)
 
-#### Description
-蓝牙调试工具
+A Windows desktop Bluetooth debugging tool built with **C# + WPF + MVVM**. It uses the Windows Classic Bluetooth (RFCOMM/SPP) protocol to provide device scanning, automatic pairing, connection management, message sending/receiving, log viewing and music playback.
 
-#### Software Architecture
-Software architecture description
+## Features
 
-#### Installation
+- Bluetooth device scanning: automatically discovers nearby Classic Bluetooth devices and marks the paired status
+- Automatic pairing: pairs unpaired devices using a PIN code (default `1234`)
+- Connection management: connect / disconnect devices with real-time status
+- Messaging: sends and receives UTF-8 text messages over the SPP serial service, with Enter-to-send shortcut
+- Message log: distinguishes Sent / Received / System entries, auto-scrolls, keeps up to 500 entries
+- Music playback: loads and plays local audio files (mp3 / wav / wma / m4a)
+- Multiple themes: light / dark themes with blue / green / purple / orange accent colors
+- Custom window: borderless rounded window with shadow, icon, drag, resize, minimize / maximize / close
 
-1.  xxxx
-2.  xxxx
-3.  xxxx
+## Tech Stack
 
-#### Instructions
+| Category | Technology |
+| --- | --- |
+| Runtime | .NET 8 (`net8.0-windows10.0.19041.0`) |
+| UI framework | WPF |
+| Architecture | MVVM |
+| MVVM framework | CommunityToolkit.Mvvm 8.2.2 |
+| Behaviors | Microsoft.Xaml.Behaviors.Wpf 1.1.77 |
+| Bluetooth | Windows.Devices.Bluetooth / Rfcomm (WinRT) |
+| Networking | Windows.Networking.Sockets (StreamSocket) |
 
-1.  xxxx
-2.  xxxx
-3.  xxxx
+## Architecture
 
-#### Contribution
+The project follows a layered MVVM architecture with separated responsibilities across the view, view model, service and model layers:
 
-1.  Fork the repository
-2.  Create Feat_xxx branch
-3.  Commit your code
-4.  Create Pull Request
+- **View (Views)**: XAML UI and window interaction logic
+- **ViewModel (ViewModels)**: UI state and commands, driving the view via data binding
+- **Service (Services)**: concrete implementations for Bluetooth, audio and theming
+- **Model (Models)**: entities and enums
+- **Themes**: theme and accent color resource dictionaries
+- **Behaviors**: reusable UI behaviors (e.g. log auto-scroll)
 
+## Project Structure
 
-#### Gitee Feature
+```text
+BluetoothTool/
+├── App.xaml / App.xaml.cs        # Application entry and service wiring
+├── BluetoothTool.csproj          # Project file
+├── Assets/
+│   └── app.ico                   # Application icon
+├── Behaviors/
+│   └── AutoScrollBehavior.cs     # Log list auto-scroll
+├── Models/
+│   ├── BluetoothDeviceInfo.cs    # Bluetooth device entity
+│   ├── BluetoothMessage.cs       # Message entity
+│   └── ThemeEnums.cs             # Theme and accent color enums
+├── Services/
+│   ├── BluetoothService.cs       # Bluetooth connection and messaging
+│   ├── AudioService.cs           # Audio playback
+│   ├── ThemeService.cs           # Theme switching
+│   └── I*Service.cs              # Corresponding interfaces
+├── Themes/
+│   ├── LightTheme.xaml           # Light theme
+│   ├── DarkTheme.xaml            # Dark theme
+│   ├── Accent*.xaml              # Accent colors
+│   └── Controls.xaml             # Global control styles
+├── ViewModels/
+│   └── MainViewModel.cs          # Main view model
+└── Views/
+    ├── MainWindow.xaml           # Main window view
+    └── MainWindow.xaml.cs        # Window code-behind
+```
 
-1.  You can use Readme\_XXX.md to support different languages, such as Readme\_en.md, Readme\_zh.md
-2.  Gitee blog [blog.gitee.com](https://blog.gitee.com)
-3.  Explore open source project [https://gitee.com/explore](https://gitee.com/explore)
-4.  The most valuable open source project [GVP](https://gitee.com/gvp)
-5.  The manual of Gitee [https://gitee.com/help](https://gitee.com/help)
-6.  The most popular members  [https://gitee.com/gitee-stars/](https://gitee.com/gitee-stars/)
+## Requirements
+
+- Windows 10 (version 2004 / Build 19041) or later
+- .NET 8 SDK
+- A host with a Bluetooth adapter and a Classic Bluetooth device in discoverable / pairable state
+
+## Installation & Running
+
+```bash
+# Restore dependencies and build
+dotnet build BluetoothTool.csproj -c Release
+
+# Run
+dotnet run --project BluetoothTool.csproj
+```
+
+You can also open the solution in Visual Studio 2022 and run it directly.
+
+## Usage
+
+1. The app scans for Bluetooth devices on startup; click "Refresh" to rescan
+2. Select a target device in the left list and adjust the pairing PIN if needed (default `1234`)
+3. Click "Connect"; the app will pair and establish an SPP connection automatically
+4. Type a message and press Enter or click "Send"; received messages appear in the log area
+5. Click "Clear" to clear the log
+6. In the music area, choose a local audio file and use Play/Pause / Stop
+7. Switch theme and accent color in the top-right corner
+
+## Bluetooth Connection Flow
+
+1. Scan nearby Classic Bluetooth devices using `BluetoothDevice.GetDeviceSelector()` + `DeviceWatcher`
+2. Pair unpaired devices via `DeviceInformationCustomPairing` + `DevicePairingKinds.ProvidePin`
+3. Enumerate RFCOMM services with `GetRfcommServicesAsync(BluetoothCacheMode.Uncached)` and pick the serial (SPP) service
+4. Establish the SPP connection via `StreamSocket.ConnectAsync`
+5. Send/receive UTF-8 data via `DataWriter` / `DataReader`, with a cancellable receive loop
+
+## FAQ
+
+- **No devices found**: make sure the host Bluetooth is on, the target device is powered and discoverable/pairable, or pair it in Windows Bluetooth settings first and rescan
+- **Connection failed (COMException)**: verify the device supports the SPP serial service and the PIN is correct; try pairing manually in Windows Bluetooth settings first
+- **Exception on disconnect**: resources are cleaned up gracefully after a broken connection and do not affect subsequent reconnects
+
+## Contribution
+
+1. Fork the repository
+2. Create a `Feat_xxx` branch
+3. Commit your code
+4. Create a Pull Request
