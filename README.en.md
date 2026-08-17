@@ -13,6 +13,10 @@ A Windows desktop Bluetooth debugging tool built with **C# + WPF + MVVM**. It us
 - Multiple themes: light / dark themes with blue / green / purple / orange accent colors
 - Custom window: borderless rounded window with shadow, icon, drag, resize, minimize / maximize / close
 
+## Screenshot
+
+![Screenshot](images/2d0e09d2-8ea4-4543-9fff-228f40238e58.png)
+
 ## Tech Stack
 
 | Category | Technology |
