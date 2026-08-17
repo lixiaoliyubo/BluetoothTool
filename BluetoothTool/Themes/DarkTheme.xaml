@@ -9,6 +9,7 @@
     <SolidColorBrush x:Key="HoverBackgroundBrush" Color="#2C3038" />
     <SolidColorBrush x:Key="SelectedBackgroundBrush" Color="#2E3B4A" />
     <SolidColorBrush x:Key="DividerBrush" Color="#373B44" />
+    <SolidColorBrush x:Key="WindowBorderBrush" Color="#2E323A" />
 
     <SolidColorBrush x:Key="TextPrimaryBrush" Color="#E7E9EE" />
     <SolidColorBrush x:Key="TextSecondaryBrush" Color="#9BA1AA" />
